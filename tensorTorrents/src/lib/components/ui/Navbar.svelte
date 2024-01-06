@@ -32,8 +32,8 @@
 	</div>
 	<NavUl>
 		<NavLi href="/" active={true}>Home</NavLi>
-		<NavLi href="/about">About</NavLi>
-		<NavLi href="/docs/components/navbar">Navbar</NavLi>
+		<NavLi href="/upload">Upload</NavLi>
+		<NavLi href="/login">Login</NavLi>
 	</NavUl>
 	<DarkMode />
 </Navbar>
