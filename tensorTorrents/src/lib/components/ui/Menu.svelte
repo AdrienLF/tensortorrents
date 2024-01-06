@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as Menubar from "@/registry/new-york/ui/menubar";
+	import * as Menubar from '$lib/registry/new-york/ui/menubar';
 </script>
 
 <Menubar.Root class="rounded-none border-b border-none px-2 lg:px-4">
@@ -34,14 +34,10 @@
 						Playlist <Menubar.Shortcut>⌘N</Menubar.Shortcut>
 					</Menubar.Item>
 					<Menubar.Item disabled>
-						Playlist from Selection <Menubar.Shortcut
-							>⇧⌘N</Menubar.Shortcut
-						>
+						Playlist from Selection <Menubar.Shortcut>⇧⌘N</Menubar.Shortcut>
 					</Menubar.Item>
 					<Menubar.Item>
-						Smart Playlist... <Menubar.Shortcut
-							>⌥⌘N</Menubar.Shortcut
-						>
+						Smart Playlist... <Menubar.Shortcut>⌥⌘N</Menubar.Shortcut>
 					</Menubar.Item>
 					<Menubar.Item>Playlist Folder</Menubar.Item>
 					<Menubar.Item disabled>Genius Playlist</Menubar.Item>
@@ -77,7 +73,7 @@
 			<Menubar.Item disabled>Burn Playlist to Disc...</Menubar.Item>
 			<Menubar.Separator />
 			<Menubar.Item>
-				Show in Finder <Menubar.Shortcut>⇧⌘R</Menubar.Shortcut>{" "}
+				Show in Finder <Menubar.Shortcut>⇧⌘R</Menubar.Shortcut>{' '}
 			</Menubar.Item>
 			<Menubar.Item>Convert</Menubar.Item>
 			<Menubar.Separator />
@@ -115,7 +111,7 @@
 			</Menubar.Item>
 			<Menubar.Separator />
 			<Menubar.Item>
-				Smart Dictation...{" "}
+				Smart Dictation...{' '}
 				<Menubar.Shortcut>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -127,15 +123,13 @@
 						class="h-4 w-4"
 						viewBox="0 0 24 24"
 					>
-						<path
-							d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"
-						/>
+						<path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12" />
 						<circle cx="17" cy="7" r="5" />
 					</svg>
 				</Menubar.Shortcut>
 			</Menubar.Item>
 			<Menubar.Item>
-				Emoji & Symbols{" "}
+				Emoji & Symbols{' '}
 				<Menubar.Shortcut>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"

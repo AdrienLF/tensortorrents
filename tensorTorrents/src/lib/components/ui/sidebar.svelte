@@ -1,22 +1,18 @@
 <script lang="ts">
-	import { cn } from "@/utils";
-	import Button from "./button/button.svelte";
-	
-	import type { Playlist } from "../(data)/playlists";
+	import { cn } from '$lib/utils';
+	import Button from './button/button.svelte';
 
-    
+	import type { Playlist } from '../(data)/playlists';
 
 	let className: string | null | undefined = undefined;
 	export let playlists: Playlist[];
 	export { className as class };
 </script>
 
-<div class={cn("pb-12", className)}>
+<div class={cn('pb-12', className)}>
 	<div class="space-y-4 py-4">
 		<div class="px-3 py-2">
-			<h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">
-				Discover
-			</h2>
+			<h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Discover</h2>
 			<div class="space-y-1">
 				<Button variant="secondary" class="w-full justify-start">
 					<svg
@@ -74,9 +70,7 @@
 			</div>
 		</div>
 		<div class="px-3 py-2">
-			<h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">
-				Library
-			</h2>
+			<h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Library</h2>
 			<div class="space-y-1">
 				<Button variant="ghost" class="w-full justify-start">
 					<svg
@@ -90,9 +84,7 @@
 						class="mr-2 h-4 w-4"
 					>
 						<path d="M21 15V6" />
-						<path
-							d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"
-						/>
+						<path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
 						<path d="M12 12H3" />
 						<path d="M16 6H3" />
 						<path d="M12 18H3" />
@@ -142,9 +134,7 @@
 						stroke-linejoin="round"
 						class="mr-2 h-4 w-4"
 					>
-						<path
-							d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"
-						/>
+						<path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12" />
 						<circle cx="17" cy="7" r="5" />
 					</svg>
 					Artists
@@ -170,16 +160,11 @@
 			</div>
 		</div>
 		<div class="py-2">
-			<h2 class="relative px-7 text-lg font-semibold tracking-tight">
-				Playlists
-			</h2>
+			<h2 class="relative px-7 text-lg font-semibold tracking-tight">Playlists</h2>
 			<div class="h-[300px] overflow-y-auto px-1">
 				<div class="space-y-1 p-2">
 					{#each playlists as playlist}
-						<Button
-							variant="ghost"
-							class="w-full justify-start font-normal"
-						>
+						<Button variant="ghost" class="w-full justify-start font-normal">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 24 24"
@@ -191,9 +176,7 @@
 								class="mr-2 h-4 w-4"
 							>
 								<path d="M21 15V6" />
-								<path
-									d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"
-								/>
+								<path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
 								<path d="M12 12H3" />
 								<path d="M16 6H3" />
 								<path d="M12 18H3" />
