@@ -4,7 +4,7 @@
     import { UserCircleSolid, AdjustmentsVerticalOutline, DownloadSolid } from 'flowbite-svelte-icons';
 </script>
 
-<div class="container mx-auto flex justify-between   ">
+<div class="container mx-auto flex justify-between py-4">
       
       <ButtonGroup>
         <Button outline color="dark">

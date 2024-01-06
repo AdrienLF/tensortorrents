@@ -5,7 +5,7 @@
 
 
 <FilterMenu />
-<div class="container mx-auto flex-auto justify-evenly p-8">
+<div class="container mx-auto flex-auto justify-evenly p-8 ">
 <MasonGallery />
 
 </div>
