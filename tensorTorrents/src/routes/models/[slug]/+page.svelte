@@ -1,20 +1,37 @@
-<script>
+<script lang="ts">
+	import type { ModelData } from '$lib/types/ModelData.js';
+	import type { VersionsArray } from '$lib/types/Versions.js';
+	import type { Version } from '$lib/types/Versions.js';
 	import { Button, Rating, AdvancedRating, ScoreRating } from 'flowbite-svelte';
 	import Carousel from '$lib/components/ui/Gallery/Carousel.svelte';
 
 	import UserCard from '$lib/components/ui/Cards/UserCard.svelte';
 	import ModelDetails from '$lib/components/ui/ModelDetails/ModelDetails.svelte';
 	import ModelFiles from '$lib/components/ui/ModelDetails/ModelFiles.svelte';
+	import { formatIsoDateString } from '$lib/utils/formatISOstrings.js';
+
+	
+
+	export let data;
+	console.log(data);
+	let model_data: ModelData = data.props.model[0];
+	let versions :Version = data.props.versions
+
+	console.log(model_data);
+	console.log(versions)
+	let imgur_id_length = model_data.imgur_link.split("/").length
+	let imgur_id = "a/" + model_data.imgur_link.split("/")[imgur_id_length-1]
+	console.log(imgur_id)
 </script>
 
 <div class="container mx-auto py-4">
 	<div class="modelHeader">
 		<div class="modelInfo flex flex-row items-center">
-			<div class="modelName text-xl font-medium">Juggernaut XL</div>
+			<div class="modelName text-xl font-medium">{model_data.name}</div>
 			<Rating id="example-1b" total={5} size={25} rating={4.66} />
 		</div>
 		<div class="uploadInfo flex flex-row items-center gap-2">
-			<div class="uploadDate text-xs">Updated: Dec 30, 2023</div>
+			<div class="uploadDate text-xs">{formatIsoDateString(model_data.upload_date)}</div>
 			|
 			<div class="tags flex flex-row gap-2 py-2">
 				<Button color="light" size="xs" class="modelCategory">Base Model</Button>
@@ -26,35 +43,32 @@
 			</div>
 		</div>
 		<div class="modelVersions flex flex-row gap-2 py-2">
+
+			{#each versions as version}
 			<Button color="alternative" active size="xs" class="modelVersionName"
-				>V7 + Rundiffusion</Button
-			>
-			<Button color="alternative" size="xs" class="modelVersionName">V6 + Rundiffusion</Button>
+			>{version.version_name}</Button
+		>
+			{/each}
+			
+			
 		</div>
 	</div>
 
 	<div class="modelContent flew-row flex gap-12">
-		<div class="modelPreview">
-			<Carousel />
+		<div class="modelPreview flex-grow">
+			<div class="previewImage items-center flex flex-col flex-grow align-middle">
+				
+				<blockquote class="imgur-embed-pub" lang="en" data-id={imgur_id} data-context="false" ></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+				
+			</div>
 			<div class="modelDescription whitespace-pre-wrap">
-				For business inquires, commercial licensing, custom models, and consultation contact me
-				under juggernaut$librundiffusion.com Update: Try out the Inpaint Version for V7 from
-				Sevenof9247 Here I am again ;) Before diving back into the details, I want to express a huge
-				thank you to all of you. Over 40k downloads for Version 6 alone is absolutely amazing. It
-				was a great pleasure to see your images in the gallery, and I hope the excitement continues
-				seamlessly with Version 7 :) A big thanks for Version 7 goes to RunDiffusion (Photo Model)
-				and Adam, who diligently helped me test :) (Leave some love for them ;) ) For Version 7,
-				I've slightly reduced the RunDiffusion Photo Model (from 0.35 to 0.3) and added a new
-				Cinematic Set with 120k training steps. Additionally, I tinkered with some small details.
-				Version 7 doesn't differ greatly from Version 6 but, thanks to its new update, it has
-				significantly increased contrast (there were a few complaints about the desaturated look),
-				and the lighting conditions appear somewhat more natural.
+				{model_data.description}
 			</div>
 		</div>
 		<div class="modelStats flex flex-col gap-2">
 			<div class="dlButtons flex items-center gap-2">
-				<Button color="green">Download torrent</Button>
-				<Button color="alternative"
+				<a href={versions[0].torrent_file_url}><Button color="green">Download torrent</Button></a>
+				<a href= {versions[0].magnet_link} ><Button color="alternative"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="20"
@@ -70,7 +84,7 @@
 							d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15"
 						/><path d="m5 8 4 4" /><path d="m12 15 4 4" /></svg
 					></Button
-				>
+				></a>
 				<Button color="red"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -92,8 +106,8 @@
 			<div class="UserCard">
 				<UserCard />
 			</div>
-			<div class="detailCard"><ModelDetails /></div>
-			<div class="fileList"><ModelFiles /></div>
+			<div class="detailCard"><ModelDetails {model_data} {versions}/></div>
+			<div class="fileList"><ModelFiles {model_data} {versions}/></div>
 		</div>
 	</div>
 </div>

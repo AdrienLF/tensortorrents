@@ -1,6 +1,8 @@
 <script>
     import { Gallery } from 'flowbite-svelte';
   import { Pagination, PaginationItem } from 'flowbite-svelte';
+  export let models
+  console.log(models)
 
 
   let pages = [{ name: "1"}, { name: "2" }, { name: "3" }, { name: "4" }, { name: "5" }];
@@ -35,7 +37,7 @@
   
   <Gallery class="gap-4 grid-cols-2 md:grid-cols-4" items={images} let:item>
    {#each images as item}
-   <a href="/models/1" class="gap-4">
+   <a href="/models/34" class="gap-4">
   <Gallery items={item} />
 </a>
    {/each}
