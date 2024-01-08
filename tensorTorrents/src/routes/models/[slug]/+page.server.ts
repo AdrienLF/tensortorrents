@@ -8,7 +8,7 @@ export async function load({ locals: { supabase }, url }) {
   let pathname = url.pathname
   let model_id = pathname.split("/")[2]
   console.log(model_id)
-  const {models, versions} = await get_model_from_id(supabase, model_id);
+  const {models, versions} = await get_model_from_id( model_id);
   console.log(models)
 
   return {

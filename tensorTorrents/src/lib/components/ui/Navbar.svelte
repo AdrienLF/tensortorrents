@@ -9,7 +9,7 @@
 <Navbar>
 	<NavBrand href="/">
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
-			><TensorTorrentsLogoV1 /></span
+			><TensorTorrentsLogoV1 class_name="fill-gray-700 dark:fill-white"/></span
 		>
 	</NavBrand>
 	<div class="md:order-0 flex">

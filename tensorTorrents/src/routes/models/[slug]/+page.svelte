@@ -1,27 +1,93 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import type { ModelData } from '$lib/types/ModelData.js';
 	import type { VersionsArray } from '$lib/types/Versions.js';
 	import type { Version } from '$lib/types/Versions.js';
-	import { Button, Rating, AdvancedRating, ScoreRating } from 'flowbite-svelte';
-	import Carousel from '$lib/components/ui/Gallery/Carousel.svelte';
+	import { Button, Rating, AdvancedRating, ScoreRating, Carousel } from 'flowbite-svelte';
 
 	import UserCard from '$lib/components/ui/Cards/UserCard.svelte';
 	import ModelDetails from '$lib/components/ui/ModelDetails/ModelDetails.svelte';
 	import ModelFiles from '$lib/components/ui/ModelDetails/ModelFiles.svelte';
 	import { formatIsoDateString } from '$lib/utils/formatISOstrings.js';
 
-	
-
 	export let data;
 	console.log(data);
-	let model_data: ModelData = data.props.model[0];
-	let versions :Version = data.props.versions
 
+	let model_data: ModelData = data.props.model[0];
+	let versions: Version = data.props.versions;
 	console.log(model_data);
-	console.log(versions)
-	let imgur_id_length = model_data.imgur_link.split("/").length
-	let imgur_id = "a/" + model_data.imgur_link.split("/")[imgur_id_length-1]
-	console.log(imgur_id)
+	console.log(versions);
+
+	let imgur_id_length = model_data.imgur_link.split('/').length;
+	let imgur_id = 'a/' + model_data.imgur_link.split('/')[imgur_id_length - 1];
+
+	console.log(imgur_id);
+
+	let albumImages = [];
+	let albumHash = model_data.imgur_link.split('/')[imgur_id_length - 1];
+	let model_images = [
+    {
+      alt: 'Image from Imgur',
+      src: 'https://i.imgur.com/6aufQ7e.jpg',
+      title: 'No description'
+    },
+    {
+      alt: 'Image from Imgur',
+      src: 'https://i.imgur.com/9svIiOf.jpg',
+      title: 'No description'
+    },
+    {
+      alt: 'Image from Imgur',
+      src: 'https://i.imgur.com/d8UBc4H.jpg',
+      title: 'No description'
+    },
+    {
+      alt: 'Image from Imgur',
+      src: 'https://i.imgur.com/XStrIja.jpg',
+      title: 'No description'
+    },
+    {
+      alt: 'Image from Imgur',
+      src: 'https://i.imgur.com/8Ragjte.jpg',
+      title: 'No description'
+    },
+    {
+      alt: 'Image from Imgur',
+      src: 'https://i.imgur.com/NrSWKbM.jpg',
+      title: 'No description'
+    },
+    {
+      alt: 'Image from Imgur',
+      src: 'https://i.imgur.com/tn9bKyA.jpg',
+      title: 'No description'
+    },
+    {
+      alt: 'Image from Imgur',
+      src: 'https://i.imgur.com/LCVVrqH.jpg',
+      title: 'No description'
+    }
+  ]
+
+	onMount(async () => {
+		try {
+		const response = await fetch(`/getAlbumImages?albumHash=${albumHash}`);
+		console.log(response);
+		if (response.ok) {
+                const imgurImages = await response.json();
+
+                // Transforming the data to the desired format
+                model_images = imgurImages.map(img => ({
+                    alt: img.title || 'Image from Imgur', // Use the title or a default description
+                    src: img.link, // The URL of the image
+                    title: img.description || 'No description' // Use the description or a default
+                }));
+            } else {
+                console.error('Failed to load images:', response.status, response.statusText);
+            }
+        } catch (e) {
+            console.error('Error fetching images:', e.message);
+        }
+	});
 </script>
 
 <div class="container mx-auto py-4">
@@ -43,24 +109,32 @@
 			</div>
 		</div>
 		<div class="modelVersions flex flex-row gap-2 py-2">
-
 			{#each versions as version}
-			<Button color="alternative" active size="xs" class="modelVersionName"
-			>{version.version_name}</Button
-		>
+				<Button color="alternative" active size="xs" class="modelVersionName"
+					>{version.version_name}</Button
+				>
 			{/each}
-			
-			
 		</div>
 	</div>
 
 	<div class="modelContent flew-row flex gap-12">
 		<div class="modelPreview flex-grow">
-			<div class="previewImage items-center flex flex-col flex-grow align-middle">
-				
-				<blockquote class="imgur-embed-pub" lang="en" data-id={imgur_id} data-context="false" ></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
-				
+			<div class="previewImage flex flex-grow flex-col items-center align-middle">
+				<!-- <blockquote class="imgur-embed-pub" lang="en" data-id={imgur_id} data-context="false" ></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+				 -->
 			</div>
+			
+			{#if model_images.length > 0}
+				<div class="gallery py-2">
+					<Carousel images={model_images} imgClass="h-72" let:Indicators>
+						<Indicators />
+					</Carousel>
+					
+				</div>
+			{:else}
+				<p>Loading images...</p>
+			{/if}
+
 			<div class="modelDescription whitespace-pre-wrap">
 				{model_data.description}
 			</div>
@@ -68,23 +142,25 @@
 		<div class="modelStats flex flex-col gap-2">
 			<div class="dlButtons flex items-center gap-2">
 				<a href={versions[0].torrent_file_url}><Button color="green">Download torrent</Button></a>
-				<a href= {versions[0].magnet_link} ><Button color="alternative"
-					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="20"
-						height="20"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="lucide lucide-magnet"
-						><path
-							d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15"
-						/><path d="m5 8 4 4" /><path d="m12 15 4 4" /></svg
-					></Button
-				></a>
+				<a href={versions[0].magnet_link}
+					><Button color="alternative"
+						><svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="lucide lucide-magnet"
+							><path
+								d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15"
+							/><path d="m5 8 4 4" /><path d="m12 15 4 4" /></svg
+						></Button
+					></a
+				>
 				<Button color="red"
 					><svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -106,8 +182,8 @@
 			<div class="UserCard">
 				<UserCard />
 			</div>
-			<div class="detailCard"><ModelDetails {model_data} {versions}/></div>
-			<div class="fileList"><ModelFiles {model_data} {versions}/></div>
+			<div class="detailCard"><ModelDetails {model_data} {versions} /></div>
+			<div class="fileList"><ModelFiles {model_data} {versions} /></div>
 		</div>
 	</div>
 </div>

@@ -1,4 +1,14 @@
-export async function get_model_from_id(supabase, model_id) {
+import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public'
+import { createBrowserClient, isBrowser, parse } from '@supabase/ssr'
+
+export async function get_model_from_id(model_id) {
+	console.log(model_id)
+
+	const supabase = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, 
+	  )
+
+	  console.log(supabase)
+
 	console.log(model_id);
 	let { data: models, error } = await supabase
 		.from('models')

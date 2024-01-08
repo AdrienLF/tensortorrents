@@ -8,7 +8,7 @@
   <Footer footerType="socialmedia">
     <div class="md:flex md:justify-between p-8">
       <div class="mb-6 md:mb-0">
-        <TensorTorrentsLogoV1 />
+        <TensorTorrentsLogoV1 class_name="fill-gray-700 dark:fill-white"/>
       </div>
       <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
         <div>
