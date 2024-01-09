@@ -39,7 +39,7 @@
 		<NavLi href="/" active={true}>Home</NavLi>
 		<NavLi href="/upload">Upload</NavLi>
 		{#if session}
-		<Button><NavLi href="/logout">Logout</NavLi></Button>
+		<Button><NavLi href="/account">Account</NavLi></Button>
 		{:else}
 		<Button><NavLi href="/auth">Login</NavLi></Button>
 		
