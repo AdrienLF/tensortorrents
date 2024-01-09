@@ -2,14 +2,19 @@
 	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button, Input } from 'flowbite-svelte';
 	import { SearchOutline } from 'flowbite-svelte-icons';
 	import TensorTorrentsLogoV1 from './TensorTorrentsLogoV1.svelte';
+	import UploadPlusButton from './UploadPlusButton.svelte';
 
 	import { DarkMode } from 'flowbite-svelte';
+
+	export let session
 </script>
 
 <Navbar>
 	<NavBrand href="/">
-		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
-			><TensorTorrentsLogoV1 class_name="fill-gray-700 dark:fill-white"/></span
+		<span
+			class="flex flex-row items-center justify-center gap-4 self-center whitespace-nowrap text-xl font-semibold dark:text-white"
+			><TensorTorrentsLogoV1 class_name="fill-gray-700 dark:fill-white" />
+			<div class="uploadButton"><a href="/upload"><UploadPlusButton /></a></div></span
 		>
 	</NavBrand>
 	<div class="md:order-0 flex">
@@ -30,10 +35,27 @@
 		</div>
 		<NavHamburger />
 	</div>
-	<NavUl>
+	<NavUl ulClass="flex flex-col p-4 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:text-sm md:font-medium items-center">
 		<NavLi href="/" active={true}>Home</NavLi>
 		<NavLi href="/upload">Upload</NavLi>
-		<NavLi href="/login">Login</NavLi>
+		{#if session}
+		<Button><NavLi href="/logout">Logout</NavLi></Button>
+		{:else}
+		<Button><NavLi href="/auth">Login</NavLi></Button>
+		
+		{/if}
+		
 	</NavUl>
 	<DarkMode />
 </Navbar>
+
+<style>
+	.uploadButton {
+		cursor: pointer;
+		height: 25px;
+		width: 25px;
+		border-radius: 5px;
+		background-color: #529c4f;
+	}
+
+</style>

@@ -24,6 +24,6 @@
   });
 </script>
 
-<Navbar />
+<Navbar {session}/>
 <slot />
 <Footer />

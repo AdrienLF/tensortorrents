@@ -6,6 +6,12 @@
 	import { extractFilesFromTorrent } from '$lib/utils/get_files_from_torrent.js';
 	export let data;
 
+	let { supabase, session } = data
+  $: ({ supabase, session } = data)
+  console.log(session)
+
+  const user_id = session?.user.id
+
 	const basemodels = data.props.basemodels;
 	const modeltypes = data.props.modeltypes;
 	console.log(data.props.basemodels);
@@ -152,6 +158,8 @@
 </script>
 
 <form method="POST" action="?/submit_torrent" use:enhance>
+
+	<input type="hidden" name="owner" id="owner" value={user_id} />
 	<div class="model-form">
 		<h2>Create your model</h2>
 		<label for="name">Name *</label>

@@ -28,6 +28,7 @@ export async function uploadFormDataToSupabase(formData: FormData, supabase) {
 
     // Prepare data for the 'Models' table
     const modelData: ModelData = {
+        owner:formObj['owner'],
         name: formObj['name'],
         imgur_link: formObj['imgur_link'],
         type_id: formObj['type'],
