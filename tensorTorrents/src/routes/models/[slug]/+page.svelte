@@ -13,6 +13,9 @@
 	export let data;
 	console.log(data);
 
+	let { supabase, session } = data
+  $: ({ supabase, session } = data)
+
 	let model_data: ModelData = data.props.model[0];
 	let versions: Version = data.props.versions;
 	console.log(model_data);
@@ -25,49 +28,7 @@
 
 	let albumImages = [];
 	let albumHash = model_data.imgur_link.split('/')[imgur_id_length - 1];
-	let model_images = [
-    {
-      alt: 'Image from Imgur',
-      src: 'https://i.imgur.com/6aufQ7e.jpg',
-      title: 'No description'
-    },
-    {
-      alt: 'Image from Imgur',
-      src: 'https://i.imgur.com/9svIiOf.jpg',
-      title: 'No description'
-    },
-    {
-      alt: 'Image from Imgur',
-      src: 'https://i.imgur.com/d8UBc4H.jpg',
-      title: 'No description'
-    },
-    {
-      alt: 'Image from Imgur',
-      src: 'https://i.imgur.com/XStrIja.jpg',
-      title: 'No description'
-    },
-    {
-      alt: 'Image from Imgur',
-      src: 'https://i.imgur.com/8Ragjte.jpg',
-      title: 'No description'
-    },
-    {
-      alt: 'Image from Imgur',
-      src: 'https://i.imgur.com/NrSWKbM.jpg',
-      title: 'No description'
-    },
-    {
-      alt: 'Image from Imgur',
-      src: 'https://i.imgur.com/tn9bKyA.jpg',
-      title: 'No description'
-    },
-    {
-      alt: 'Image from Imgur',
-      src: 'https://i.imgur.com/LCVVrqH.jpg',
-      title: 'No description'
-    }
-  ]
-
+	
 	onMount(async () => {
 		try {
 		const response = await fetch(`/getAlbumImages?albumHash=${albumHash}`);
@@ -126,7 +87,7 @@
 			
 			{#if model_images.length > 0}
 				<div class="gallery py-2">
-					<Carousel images={model_images} imgClass="h-72" let:Indicators>
+					<Carousel images={model_images}  let:Indicators>
 						<Indicators />
 					</Carousel>
 					
@@ -180,7 +141,7 @@
 				>
 			</div>
 			<div class="UserCard">
-				<UserCard />
+				<UserCard model={model_data} {supabase}/>
 			</div>
 			<div class="detailCard"><ModelDetails {model_data} {versions} /></div>
 			<div class="fileList"><ModelFiles {model_data} {versions} /></div>

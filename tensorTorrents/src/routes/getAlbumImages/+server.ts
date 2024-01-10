@@ -1,5 +1,6 @@
 // src/routes/getAlbumImages.ts
 import { IMGUR_CLIENT_ID } from '$env/static/private';
+
 import { json } from '@sveltejs/kit';
 
 export async function GET({ request }) {

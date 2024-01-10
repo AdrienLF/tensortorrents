@@ -2,14 +2,14 @@ import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/publi
 import { createBrowserClient, isBrowser, parse } from '@supabase/ssr'
 
 
-export async function get_models( page = 1, itemsPerPage = 20) {
+export async function get_models( search_input) {
 
 	const supabase = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, 
 		)
 		
     let start_pagination = (page - 1) * itemsPerPage;
     let end_pagination = start_pagination + itemsPerPage - 1;
-	let { data: models, error } = await supabase.from('models').select('*, modeltypes(type_id, name),owner(username, avatar_url, created_at)').range(start_pagination, end_pagination);
+	let { data: models, error } = await supabase.from('models').select('*, modeltypes(type_id, name),owner(username, avatar_url, created_at)').ilike("name", search_input);
 
 	// Check if there was an error in the query
 	if (error) {

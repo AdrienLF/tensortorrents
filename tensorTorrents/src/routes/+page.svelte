@@ -7,6 +7,9 @@
 
 	export let data;
 
+	let { supabase, session } = data;
+  $: ({ supabase } = data);
+
 	let pages = [{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }, { name: '5' }];
 
 	let models = data.props.models;
@@ -56,7 +59,7 @@
 			class="container mx-auto flex-auto columns-1 justify-evenly gap-5 p-8 sm:columns-2 sm:gap-8 md:columns-3 lg:columns-4 [&>.modelCard:not(:first-child)]:mt-8"
 		>
 			{#each models as model, index}
-				<ModelCard {model} {index} />
+				<ModelCard {model} {index} {supabase} />
 			{/each}
 		</div>
 	{/if}

@@ -12,7 +12,7 @@ export async function get_model_from_id(model_id) {
 	console.log(model_id);
 	let { data: models, error } = await supabase
 		.from('models')
-		.select('*, modeltypes(type_id, name)')
+		.select('*, modeltypes(type_id, name),owner(username, avatar_url, created_at)')
 		.eq('model_id', model_id);
 
 	let { data: versions, version_error } = await supabase
