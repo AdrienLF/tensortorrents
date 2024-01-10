@@ -52,11 +52,11 @@ import { Button, Checkbox, Label, Input } from 'flowbite-svelte';
 	};
 </script>
 
-
-<Section name="login">
-  <Register href="/">
+<div class="container mx-auto max-w-screen-md">
+<Section name="login" >
+  <Register >
     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-      <form class="flex flex-col space-y-6" action="/">
+      <form class="flex flex-col space-y-6" >
         <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Login</h3>
         <Label class="space-y-2">
           <span>Your email</span>
@@ -98,40 +98,4 @@ import { Button, Checkbox, Label, Input } from 'flowbite-svelte';
     </div>
   </Register>
 </Section>
-
-<style>
-	form,
-	button {
-		margin: 10px 0;
-	}
-
-	input {
-		padding: 8px;
-		margin: 5px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-	}
-
-	button {
-		padding: 10px 15px;
-		background-color: #007bff;
-		color: white;
-		border: none;
-		border-radius: 4px;
-		cursor: pointer;
-	}
-
-	button:hover {
-		background-color: #0056b3;
-	}
-
-	.message {
-		color: #d8000c;
-		background-color: #ffbaba;
-	}
-
-	.message.success {
-		color: #4f8a10;
-		background-color: #dff2bf;
-	}
-</style>
+</div>

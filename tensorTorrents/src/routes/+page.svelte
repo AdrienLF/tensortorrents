@@ -54,11 +54,12 @@
 </script>
 
 <div class="moto container flex p-2 items-center justify-center">
-	<Card>
+	<Card size="l">
 		<Heading tag="h6"
 			>Open source also means open distribution. </Heading
 			>
-			
+			TensorTorrents was created in fear of amazing models disappearing.
+			<br>
 			To make sure models will be available to
 			everyone in a sustainable way, we only use a torrent distribution model. <strong> Power to the creators,
 			not the financiers.</strong>
