@@ -5,6 +5,7 @@
 	import { Pagination, PaginationItem } from 'flowbite-svelte';
 	import { ArrowLeftSolid, ArrowRightSolid } from 'flowbite-svelte-icons';
 	import { Heading, Card } from 'flowbite-svelte';
+	import Faq from '$lib/components/ui/FAQ.svelte';
 
 	export let data;
 
@@ -66,8 +67,13 @@
 	</Card>
 </div>
 
+
+<div class="container">
+	<Heading tag="h4">Check out these new models</Heading>
+</div>
 <!-- <FilterMenu /> -->
 <div class="models container">
+	
 	{#if models}
 		<div
 			class="container mx-auto flex-auto columns-1 justify-evenly gap-5 p-8 sm:columns-2 sm:gap-8 md:columns-3 lg:columns-4 [&>.modelCard:not(:first-child)]:mt-8"
@@ -89,6 +95,10 @@
 	</div>
 </div>
 
+<div class="container max-w-screen-md py-16">
+	<Heading tag="h4">FAQ - TensorTorrents, Your Open Source Alternative to CivitAI</Heading>
+<Faq />
+</div>
 <style>
 	.models {
 		display: flex;
