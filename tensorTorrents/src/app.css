@@ -4,6 +4,8 @@
  
 @layer base {
   :root {
+    --default-font : -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji';
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
  

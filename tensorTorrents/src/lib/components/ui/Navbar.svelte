@@ -3,6 +3,7 @@
 	import { SearchOutline } from 'flowbite-svelte-icons';
 	import TensorTorrentsLogoV1 from './TensorTorrentsLogoV1.svelte';
 	import UploadPlusButton from './UploadPlusButton.svelte';
+	import ModelSearchBar from './ModelSearchBar.svelte';
 
 	import { DarkMode } from 'flowbite-svelte';
 
@@ -31,7 +32,7 @@
 			<div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
 				<SearchOutline class="h-4 w-4" />
 			</div>
-			<Input id="search-navbar" class="ps-10" placeholder="Search..." />
+			<ModelSearchBar />
 		</div>
 		<NavHamburger />
 	</div>
