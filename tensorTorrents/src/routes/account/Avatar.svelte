@@ -8,30 +8,16 @@
 	export let url: string
 	export let supabase: SupabaseClient
 
-	let avatarUrl: string | null = null
+	
 	let uploading = false
 	let files: FileList
+	let avatar_public_url : string 
 
-    console.log(avatarUrl)
+    console.log(url)
 
 	const dispatch = createEventDispatcher()
 
-	const downloadImage = async (path: string) => {
-		try {
-			const { data, error } = await supabase.storage.from('avatars').download(path)
-
-			if (error) {
-				throw error
-			}
-
-			const url = URL.createObjectURL(data)
-			avatarUrl = url
-		} catch (error) {
-			if (error instanceof Error) {
-				console.log('Error downloading image: ', error.message)
-			}
-		}
-	}
+	
 
 	const uploadAvatar = async () => {
 		try {
@@ -50,11 +36,16 @@
 			const { error } = await supabase.storage.from('avatars').upload(filePath, file)
             console.log(error)
 
+			const { data, url_error } = await supabase.storage.from('avatars').getPublicUrl(filePath)
+			console.log(data)
+			avatar_public_url = data.publicUrl
+            console.log(url_error)
+
 			if (error) {
 				throw error
 			}
 
-			url = filePath
+			url = avatar_public_url
 			setTimeout(() => {
 				dispatch('upload')
 			}, 100)
@@ -67,15 +58,14 @@
 		}
 	}
 
-	$: if (url) downloadImage(url)
 </script>
 
 <div>
-	{#if avatarUrl}
+	{#if url}
     <div class="avatar">
 		<img
-			src={avatarUrl}
-			alt={avatarUrl ? 'Avatar' : 'No image'}
+			src={url}
+			alt={url ? 'Avatar' : 'No image'}
 			class="avatar image"
 			style="height: {size}em; width: {size}em;"
 		/>
@@ -83,7 +73,7 @@
 	{:else}
 		<div class="avatar no-image" style="height: {size}em; width: {size}em;" />
 	{/if}
-	<input type="hidden" name="avatarUrl" value={url} />
+	<input type="hidden" name="avatarUrl" value={avatar_public_url} />
 
 	<div style="width: {size}em;" class="py-2">
         <Button><label class="button primary block" for="single">
@@ -108,5 +98,6 @@
         border-radius: 999994Px;
         overflow: hidden;
         margin:20px 0px;
+		object-fit: cover;
     }
 </style>

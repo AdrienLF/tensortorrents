@@ -15,17 +15,17 @@
   <Accordion>
     <AccordionItem open>
       <span slot="header">Details</span>
-      <TableBody class="divide-y">
+      <TableBody >
         <TableBodyRow>
           <TableBodyCell>Type</TableBodyCell>
           <TableBodyCell>{model_data.modeltypes.name} {model_data.category}</TableBodyCell>
           
         </TableBodyRow>
-        <TableBodyRow>
+        <!-- <TableBodyRow>
           <TableBodyCell>Stats</TableBodyCell>
           <TableBodyCell>White</TableBodyCell>
           
-        </TableBodyRow>
+        </TableBodyRow> -->
         <TableBodyRow>
           <TableBodyCell>Uploaded</TableBodyCell>
           <TableBodyCell>{formatIsoDateString(model_data.upload_date)}</TableBodyCell>

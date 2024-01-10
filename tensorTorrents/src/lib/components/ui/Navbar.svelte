@@ -8,6 +8,8 @@
 	import { DarkMode } from 'flowbite-svelte';
 
 	export let session
+
+	$: {console.log(session)}
 </script>
 
 <Navbar>

@@ -4,11 +4,12 @@
 	import ModelCard from '$lib/components/ui/Gallery/ModelCard.svelte';
 	import { Pagination, PaginationItem } from 'flowbite-svelte';
 	import { ArrowLeftSolid, ArrowRightSolid } from 'flowbite-svelte-icons';
+	import { Heading, Card } from 'flowbite-svelte';
 
 	export let data;
 
 	let { supabase, session } = data;
-  $: ({ supabase } = data);
+	$: ({ supabase } = data);
 
 	let pages = [{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }, { name: '5' }];
 
@@ -52,7 +53,19 @@
 	}
 </script>
 
-<FilterMenu />
+<div class="moto container flex p-2 items-center justify-center">
+	<Card>
+		<Heading tag="h6"
+			>Open source also means open distribution. </Heading
+			>
+			
+			To make sure models will be available to
+			everyone in a sustainable way, we only use a torrent distribution model. <strong> Power to the creators,
+			not the financiers.</strong>
+	</Card>
+</div>
+
+<!-- <FilterMenu /> -->
 <div class="models container">
 	{#if models}
 		<div

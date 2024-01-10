@@ -28,6 +28,8 @@
 
 	let albumImages = [];
 	let albumHash = model_data.imgur_link.split('/')[imgur_id_length - 1];
+
+	let model_images = []
 	
 	onMount(async () => {
 		try {
@@ -87,7 +89,7 @@
 			
 			{#if model_images.length > 0}
 				<div class="gallery py-2">
-					<Carousel images={model_images}  let:Indicators>
+					<Carousel images={model_images}  let:Indicators imgClass="object-contain h-full w-fit rounded-sm">
 						<Indicators />
 					</Carousel>
 					

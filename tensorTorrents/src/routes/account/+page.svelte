@@ -15,6 +15,7 @@
 	let username: string = profile?.username ?? ''
 	let website: string = profile?.website ?? ''
 	let avatarUrl: string = profile?.avatar_url ?? ''
+  console.log(avatarUrl)
 
 	const handleSubmit: SubmitFunction = () => {
 		loading = true

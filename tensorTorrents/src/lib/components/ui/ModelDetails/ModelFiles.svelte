@@ -12,7 +12,7 @@
   <Accordion>
     <AccordionItem >
       <span slot="header">Files</span>
-      <TableBody class="divide-y">
+      <TableBody >
         <TableBodyRow>
           <TableBodyCell>Model.safetensor</TableBodyCell>
           
