@@ -1,53 +1,95 @@
 <script lang="ts">
 	import { Dropzone, Listgroup, ListgroupItem, Button, Dropdown, Toggle } from 'flowbite-svelte';
 	import { enhance } from '$app/forms';
-	import { createEventDispatcher } from 'svelte';
-	import { generateMagnetLink } from '$lib/utils/generateMagnetlink.js';
-	import { extractFilesFromTorrent } from '$lib/utils/get_files_from_torrent.js';
+
+	import { uploadTorrent } from '$lib/utils/torrents/upload_torrent.js';
+	
+
 	export let data;
 
-	let { supabase, session } = data
-  $: ({ supabase, session } = data)
-  console.log(session)
+	export let size = 10;
+	export let url: string;
 
-  const user_id = session?.user.id
+	let torrent_URL: string;
+
+	let magnet_link: string;
+
+	$: {
+		console.log(value);
+	}
+
+	let selectedModelTypeId;
+	let isTrained = true;
+	let isChecked = true;
+
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
+	console.log(session);
+
+	const user_id = session?.user.id;
 
 	const basemodels = data.props.basemodels;
 	const modeltypes = data.props.modeltypes;
 	console.log(data.props.basemodels);
 
+	
+
 	let value = [];
 
-	const dropHandle = (event) => {
-		console.log(event);
-		value = [];
-		event.preventDefault();
-		let file = event.dataTransfer.files;
-		console.log(file);
-		uploadTorrent(file, data.supabase);
-		if (event.dataTransfer.items) {
-			[...event.dataTransfer.items].forEach((item, i) => {
-				if (item.kind === 'file') {
-					const file = item.getAsFile();
+	$: {
+		console.log(magnet_link);
+	}
+
+	const dropHandle = async (event) => {
+		try {
+			console.log(event);
+
+			event.preventDefault();
+			let file = event.dataTransfer.files;
+			console.log(file);
+
+			if (file.length > 0) {
+				value.push(file[0].name);
+				value = value;
+			}
+
+			// Use await to ensure uploadTorrent completes before moving on
+			// Destructure the response from uploadTorrent
+			({ url, magnet_link, torrent_URL } = await uploadTorrent(file));
+
+			console.log(url, magnet_link, torrent_URL);
+
+			// Process the dropped items
+			if (event.dataTransfer.items) {
+				[...event.dataTransfer.items].forEach((item) => {
+					if (item.kind === 'file') {
+						const file = item.getAsFile();
+						value.push(file.name);
+					}
+				});
+			} else {
+				[...event.dataTransfer.files].forEach((file) => {
 					value.push(file.name);
-					value = value;
-				}
-			});
-		} else {
-			[...event.dataTransfer.files].forEach((file, i) => {
-				value = file.name;
-			});
+				});
+			}
+		} catch (error) {
+			// Handle the error from uploadTorrent or any other errors
+			console.error('Error:', error.message);
+			alert(error.message);
 		}
 	};
 
-	const handleChange = (event) => {
+	const handleChange = async (event) => {
 		console.log(event);
 		const files = event.target.files;
 		if (files.length > 0) {
 			value.push(files[0].name);
 			value = value;
 		}
-		uploadTorrent(files, data.supabase);
+
+		// Use await to ensure uploadTorrent completes before moving on
+		({ url, magnet_link, torrent_URL } = await uploadTorrent(files));
+		console.log(url, magnet_link, torrent_URL);
 	};
 
 	const showFiles = (files) => {
@@ -70,95 +112,19 @@
 		document.getElementById(hiddenInputId).value = toggleValue.toString(); // Convert boolean to string
 	}
 
-	export let size = 10;
-	export let url: string;
+	function removeFile(index) {
+    if (index > -1 && index < value.length) {
+        value = [...value.slice(0, index), ...value.slice(index + 1)];
+    } else {
+        console.error('Invalid index:', index);
+    }
+}
 
-	let uploading = false;
-	let torrent_URL: string;
-
-	let magnet_link: string;
-	const dispatch = createEventDispatcher();
-
-	const getTorrentUrl = async (path: string, supabase) => {
-		try {
-			const { data, error } = await supabase.storage.from('torrent_files').getPublicUrl(path);
-			console.log(data);
-			console.log(error);
-			if (error) {
-				throw error;
-			}
-
-			const url = data.publicUrl;
-			torrent_URL = url;
-			console.log(torrent_URL);
-		} catch (error) {
-			if (error instanceof Error) {
-				console.log('Error downloading torrent: ', error.message);
-			}
-		}
-	};
-
-	const uploadTorrent = async (files, supabase) => {
-		try {
-			console.log(files);
-			uploading = true;
-
-			if (!files || files.length === 0) {
-				throw new Error('You must select an image to upload.');
-			}
-
-			const file = files[0];
-
-			extractFilesFromTorrent(file)
-				.then((files) => console.log(files))
-				.catch((error) => console.error(error));
-
-			magnet_link = await generateMagnetLink(file);
-			console.log(magnet_link);
-			const filename = file.name.split('.')[0];
-			const fileExt = file.name.split('.').pop();
-			const filePath = `${filename}${Math.random()}.${fileExt}`;
-			console.log(file);
-			console.log(fileExt);
-			console.log(filePath);
-
-			const { data, error } = await supabase.storage.from('torrent_files').upload(filePath, file);
-			console.log(data);
-			console.log(error);
-
-			getTorrentUrl(filePath, supabase);
-
-			if (error) {
-				throw error;
-			}
-
-			url = filePath;
-			console.log(url);
-			setTimeout(() => {
-				dispatch('upload');
-			}, 100);
-		} catch (error) {
-			if (error instanceof Error) {
-				alert(error.message);
-			}
-		} finally {
-			uploading = false;
-		}
-	};
-
-	$: {
-		console.log(value);
-	}
-
-	let selectedModelTypeId;
-	let isTrained = true;
-	let isChecked = true;
 
 	$: showCheckpointType = modeltypes.find((m) => m.type_id === selectedModelTypeId)?.type_id === 1;
 </script>
 
 <form method="POST" action="?/submit_torrent" use:enhance>
-
 	<input type="hidden" name="owner" id="owner" value={user_id} />
 	<div class="model-form">
 		<h2>Create your model</h2>
@@ -310,6 +276,7 @@
 		>
 		<input type="hidden" name="torrent_url" bind:value={torrent_URL} />
 		<input type="hidden" name="magnet_link" bind:value={magnet_link} />
+		
 	</div>
 </form>
 

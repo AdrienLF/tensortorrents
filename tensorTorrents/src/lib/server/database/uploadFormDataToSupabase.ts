@@ -1,3 +1,4 @@
+import { getImagesFromAlbum } from "../imgur/getImagesFromAlbum";
 interface ModelData {
 	name: string;
     imgur_link:string;
@@ -26,6 +27,17 @@ export async function uploadFormDataToSupabase(formData: FormData, supabase) {
     // Log formObj to check the values
     console.log('Form Object:', formObj);
 
+    let previewImageUrl;
+    if (formObj['imgur_link']) {
+        try {
+            // Fetch the preview image URL using the Imgur link
+            previewImageUrl = await getImagesFromAlbum(formObj['imgur_link']);
+        } catch (error) {
+            console.error('Error fetching preview image URL:', error);
+            // Handle the error or set a default value for previewImageUrl
+        }
+    }
+
     // Prepare data for the 'Models' table
     const modelData: ModelData = {
         owner:formObj['owner'],
@@ -34,7 +46,8 @@ export async function uploadFormDataToSupabase(formData: FormData, supabase) {
         type_id: formObj['type'],
         checkpoint_type: formObj['checkpoint_type'],
         category: formObj['category'],
-        description: formObj['description']
+        description: formObj['description'],
+        preview_img_url: previewImageUrl
     };
 
     // Log modelData to check the values

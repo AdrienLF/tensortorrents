@@ -1,6 +1,6 @@
 import bencode from 'bencode';
 
-export function extractFilesFromTorrent(file) {
+export function get_files_from_torrent(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = function (e) {
@@ -23,6 +23,7 @@ export function extractFilesFromTorrent(file) {
                         length: torrent.info.length 
                     }];
 
+                    console.log(files)
                 resolve(files);
             } catch (error) {
                 reject(error);
