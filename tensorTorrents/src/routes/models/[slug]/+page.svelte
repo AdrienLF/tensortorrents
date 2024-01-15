@@ -4,6 +4,7 @@
 	import type { VersionsArray } from '$lib/types/Versions.js';
 	import type { Version } from '$lib/types/Versions.js';
 	import { Button, Rating, AdvancedRating, ScoreRating, Carousel } from 'flowbite-svelte';
+	import RateModels from '$lib/components/ui/ModelDetails/RateModels.svelte';
 
 	import UserCard from '$lib/components/ui/Cards/UserCard.svelte';
 	import ModelDetails from '$lib/components/ui/ModelDetails/ModelDetails.svelte';
@@ -145,6 +146,7 @@
 			<div class="UserCard">
 				<UserCard model={model_data} {supabase}/>
 			</div>
+			<div class="RateModels"><RateModels {supabase} {model_data} {versions} {session}/></div>
 			<div class="detailCard"><ModelDetails {model_data} {versions} /></div>
 			<div class="fileList"><ModelFiles {model_data} {versions} /></div>
 		</div>
