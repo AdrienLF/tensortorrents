@@ -42,7 +42,7 @@
 		<NavLi href="/" active={true}>Home</NavLi>
 		<NavLi href="/upload">Upload</NavLi>
 		{#if session}
-		<Button><NavLi href="/account">Account</NavLi></Button>
+		<Button><NavLi href="/account"><span class="text-gray-100 dark:text-gray-200 ">Account</span></NavLi></Button>
 		{:else}
 		<Button><NavLi href="/auth">Login</NavLi></Button>
 		

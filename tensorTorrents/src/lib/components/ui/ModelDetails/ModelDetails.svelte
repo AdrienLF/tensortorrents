@@ -17,8 +17,8 @@
       <span slot="header">Details</span>
       <TableBody >
         <TableBodyRow>
-          <TableBodyCell>Type</TableBodyCell>
-          <TableBodyCell>{model_data.modeltypes.name} {model_data.category}</TableBodyCell>
+          <TableBodyCell ><span class="text-gray-500 dark:text-gray-200 ">Type</span></TableBodyCell>
+          <TableBodyCell ><span class="text-gray-500 dark:text-gray-200 ">{model_data.modeltypes.name} {model_data.category}</span></TableBodyCell>
           
         </TableBodyRow>
         <!-- <TableBodyRow>
@@ -27,13 +27,13 @@
           
         </TableBodyRow> -->
         <TableBodyRow>
-          <TableBodyCell>Uploaded</TableBodyCell>
-          <TableBodyCell>{formatIsoDateString(model_data.upload_date)}</TableBodyCell>
+          <TableBodyCell><span class="text-gray-500 dark:text-gray-200 ">Uploaded</span></TableBodyCell>
+          <TableBodyCell><span class="text-gray-500 dark:text-gray-200 ">{formatIsoDateString(model_data.upload_date)}</span></TableBodyCell>
           
         </TableBodyRow>
         <TableBodyRow>
-            <TableBodyCell>Base model</TableBodyCell>
-            <TableBodyCell>{versions[0].basemodels.name}</TableBodyCell>
+            <TableBodyCell><span class="text-gray-500 dark:text-gray-200 ">Base model</span></TableBodyCell>
+            <TableBodyCell><span class="text-gray-500 dark:text-gray-200 ">{versions[0].basemodels.name}</span></TableBodyCell>
             
           </TableBodyRow>
       </TableBody>

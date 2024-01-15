@@ -18,7 +18,7 @@
       <TableBody >
         {#each torrent_files as files}
         <TableBodyRow>
-          <TableBodyCell tdClass="text-ellipsis overflow-hidden ... max-w-[300px]" title={files.path}>{files.path}</TableBodyCell>
+          <TableBodyCell tdClass="text-ellipsis overflow-hidden ... max-w-[300px] text-gray-500 dark:text-gray-200 " title={files.path}><span class="text-gray-500 dark:text-gray-200 ">{files.path}</span></TableBodyCell>
           
           
         </TableBodyRow>
