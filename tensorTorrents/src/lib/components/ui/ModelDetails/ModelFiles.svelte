@@ -7,26 +7,23 @@
   export let model_data:ModelData
   export let versions:VersionsArray
   console.log(versions)
+  let torrent_files = JSON.parse(versions[0].torrent_files)
+  console.log(torrent_files)
+  
   </script>
   
   <Accordion>
     <AccordionItem >
       <span slot="header">Files</span>
       <TableBody >
+        {#each torrent_files as files}
         <TableBodyRow>
-          <TableBodyCell>Model.safetensor</TableBodyCell>
+          <TableBodyCell tdClass="text-ellipsis overflow-hidden ... max-w-[300px]" title={files.path}>{files.path}</TableBodyCell>
           
           
         </TableBodyRow>
-        <TableBodyRow>
-          <TableBodyCell>Preview.jpg</TableBodyCell>
-          
-          
-        </TableBodyRow>
-        <TableBodyRow>
-          <TableBodyCell>Workflow.json</TableBodyCell>
-          
-        </TableBodyRow>
+        {/each}
+        
        
       </TableBody>
     </AccordionItem>

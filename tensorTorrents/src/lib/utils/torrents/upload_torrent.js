@@ -3,6 +3,7 @@ import { get_files_from_torrent } from './get_files_from_torrent';
 import { generateMagnetLink } from '../generateMagnetlink';
 import { getTorrentUrl } from './get_torrent_url';
 import { validateFiles } from './validateFiles';
+import { json } from '@sveltejs/kit';
 
 export async function uploadTorrent(files) {
 	try {
@@ -44,8 +45,11 @@ export async function uploadTorrent(files) {
 
 		let url = filePath;
 
-        console.log( url, magnet_link, torrent_URL )
-		return  {url, magnet_link, torrent_URL};
+        console.log( url, magnet_link, torrent_URL, torrent_files )
+		let torrent_files_str = JSON.stringify(torrent_files)
+		
+		console.log(torrent_files_str)
+		return  {url, magnet_link, torrent_URL, torrent_files_str};
 	} catch (error) {
 		if (error instanceof Error) {
 			alert(error.message);

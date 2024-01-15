@@ -13,6 +13,7 @@
 	let torrent_URL: string;
 
 	let magnet_link: string;
+	let torrent_files_str : []
 
 	$: {
 		console.log(value);
@@ -55,9 +56,9 @@
 
 			// Use await to ensure uploadTorrent completes before moving on
 			// Destructure the response from uploadTorrent
-			({ url, magnet_link, torrent_URL } = await uploadTorrent(file));
+			({ url, magnet_link, torrent_URL, torrent_files_str } = await uploadTorrent(file));
 
-			console.log(url, magnet_link, torrent_URL);
+			console.log(url, magnet_link, torrent_URL, torrent_files_str);
 
 			// Process the dropped items
 			if (event.dataTransfer.items) {
@@ -88,8 +89,8 @@
 		}
 
 		// Use await to ensure uploadTorrent completes before moving on
-		({ url, magnet_link, torrent_URL } = await uploadTorrent(files));
-		console.log(url, magnet_link, torrent_URL);
+		({ url, magnet_link, torrent_URL, torrent_files_str } = await uploadTorrent(files));
+		console.log(url, magnet_link, torrent_URL, torrent_files_str);
 	};
 
 	const showFiles = (files) => {
@@ -276,6 +277,7 @@
 		>
 		<input type="hidden" name="torrent_url" bind:value={torrent_URL} />
 		<input type="hidden" name="magnet_link" bind:value={magnet_link} />
+		<input type="hidden" name="torrent_files" bind:value={torrent_files_str} />
 		
 	</div>
 </form>

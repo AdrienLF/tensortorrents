@@ -86,7 +86,8 @@ export async function uploadFormDataToSupabase(formData: FormData, supabase) {
         trigger_words: formObj['trigger-words'],
         trigger_bool: formObj['trigger_bool'] === 'true',
         torrent_file_url: formObj['torrent_url'], 
-        magnet_link: formObj['magnet_link'] 
+        magnet_link: formObj['magnet_link'],
+        torrent_files: formObj['torrent_files'] 
     };
     console.log(versionData)
 
